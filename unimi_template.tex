@@ -1,0 +1,131 @@
+EAMBLE
+\documentclass[a4paper, 13pt, oneside]{report}
+\linespread{1.5} %space between lines
+
+\pagestyle{plain}
+
+\usepackage{geometry} %margins
+\geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
+
+\usepackage{graphicx}
+\graphicspath{ {./figures/} }
+\usepackage{multicol} %more columns
+\usepackage{ragged2e} %text alignment
+\usepackage{lmodern} % use modern font style
+\usepackage{listings}
+\usepackage[english]{babel} %main language
+\usepackage{csquotes}
+\usepackage[labelfont=bf]{caption}
+\usepackage[backend=biber, style=nature]{biblatex} %bibliography
+\addbibresource{custom_bibliography.bib}
+\addbibresource{Thesis.bib}
+
+\usepackage{comment}
+\usepackage{xpatch}
+\usepackage{blindtext}
+
+\makeatletter
+
+\xpatchcmd{\@makeschapterhead}{%
+  \Huge\bfseries  #1\par\nobreak%
+}{%
+  \Huge \bfseries\centering #1\par\nobreak%
+}{\typeout{Patched makeschapterhead}}{\typeout{patching of @makeschapterhead failed}}
+
+
+\xpatchcmd{\@makechapterhead}{%
+  \huge\bfseries \@chapapp\space \thechapter
+}{%
+  \huge\bfseries\centering \@chapapp\space \thechapter
+}{\typeout{Patched @makechapterhead}}{\typeout{Patching of @makechapterhead failed}}
+
+\makeatother
+
+\usepackage{fancyhdr}
+\usepackage[export]{adjustbox}
+
+\usepackage{hyperref} %hyperlink
+\hypersetup{
+    colorlinks=true,
+    citecolor=cyan,
+    linkcolor=black,
+    urlcolor=black,
+    pdftitle=Master Thesis,
+    pdfauthor=Mattia Toninelli,
+    }
+
+\usepackage{booktabs} %tables
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{graphicx}
+
+\usepackage{lscape}
+\usepackage{float}
+\usepackage{wrapfig}
+% PREAMBLE END
+
+%DOCUMENT START
+\begin{document}
+\begin{titlepage} %change \vspace{} values for the desired results
+
+\begin{center}
+	\includegraphics{figures/tesiMEDICINA_CHIRURGIA.jpg}\par
+	\vspace{1cm}
+	{\scshape\large Master's degree programme in Medical Biotechnology \\ and Molecular Medicine\par}
+	\vspace{4cm}
+	{\schape\large\bfseries TITLE HERE\par}
+	\vspace{4cm}
+	\end{center}
+	
+	\begin{multicols}{2}
+	\begin{center}
+	 	{
+                  \schape\normalsize\textbf{Supervisor:}\\ \\
+                 \schape\normalsize\textbf{Co-Supervisor:}\\ \par}
+	\vfill
+	\schape\normalsize\textbf{Experimental Thesis by:}\\Mattia Toninelli\\ \par 
+	\end{center}
+	\end{multicols}
+	
+	\vfill
+
+% Bottom of the page
+	{\begin{center}
+	     \schape\large Academic Year 2020/2021
+	\end{center}}
+
+\end{titlepage}
+
+\section{Abstract}
+Insert abstract portion here    
+
+\tableofcontents
+
+% Start inclusion of files
+%\include{master_thesis/chapters/introduction}
+%\include{master_thesis/chapters/materials_methods}
+
+\printbibliography
+
+\medskip
+
+\
+
+\end{document}
+
+workflow { 
+	idx = channel.of(1,2,3)
+	data = channel.fromPath(params.motifs)
+			.splitCsv(header: true)
+			.map {row -> [row.condition, file(row.path), file(row.consensus)]}
+	sizes = channel.fromPath(params.genome_sizes)
+	bed_of_int = channel.fromPath(params.bed_of_int)
+	
+	SHUFFLE_INTERSECT(idx, sizes, bed_of_int, data)
+
+}
+*/
+
+
+
+
