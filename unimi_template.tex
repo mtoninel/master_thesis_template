@@ -1,5 +1,5 @@
-EAMBLE
-\documentclass[a4paper, 13pt, oneside]{report}
+% PREAMBLE
+\documentclass[a4paper, 12pt, oneside]{report}
 \linespread{1.5} %space between lines
 
 \pagestyle{plain}
@@ -7,16 +7,35 @@ EAMBLE
 \usepackage{geometry} %margins
 \geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
 
-\usepackage{graphicx}
-\graphicspath{ {./figures/} }
-\usepackage{multicol} %more columns
-\usepackage{ragged2e} %text alignment
+
+\usepackage{multicol} % multi columns
+\usepackage{ragged2e} % text alignment
 \usepackage{lmodern} % use modern font style
+
 \usepackage{listings}
-\usepackage[english]{babel} %main language
+\lstset{frame=tb, % listings config, this can be changed in the document body as well
+  language=bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{SpringGreen},
+  keywordstyle=\color{NavyBlue},
+  commentstyle=\color{gray},
+  stringstyle=\color{Orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  captionpos=b
+}
+
+\usepackage{amsmath}
+\usepackage[english]{babel} % main language
 \usepackage{csquotes}
 \usepackage[labelfont=bf]{caption}
-\usepackage[backend=biber, style=nature]{biblatex} %bibliography
+\usepackage[backend=biber, style=nature]{biblatex} % bibliography
 \addbibresource{custom_bibliography.bib}
 \addbibresource{Thesis.bib}
 
@@ -44,20 +63,21 @@ EAMBLE
 \usepackage{fancyhdr}
 \usepackage[export]{adjustbox}
 
-\usepackage{hyperref} %hyperlink
+\usepackage{hyperref} % hyperlink
 \hypersetup{
     colorlinks=true,
-    citecolor=cyan,
+    citecolor=teal,
     linkcolor=black,
     urlcolor=black,
     pdftitle=Master Thesis,
     pdfauthor=Mattia Toninelli,
     }
 
-\usepackage{booktabs} %tables
+\usepackage{booktabs}
 \usepackage{multirow}
-\usepackage[table,xcdraw]{xcolor}
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
 \usepackage{graphicx}
+\graphicspath{ {./figures/} }
 
 \usepackage{lscape}
 \usepackage{float}
@@ -66,24 +86,24 @@ EAMBLE
 
 %DOCUMENT START
 \begin{document}
-\begin{titlepage} %change \vspace{} values for the desired results
+\begin{titlepage} % change \vspace{} values for the desired results
 
 \begin{center}
-	\includegraphics{figures/tesiMEDICINA_CHIRURGIA.jpg}\par
+	\includegraphics{logo/tesiMEDICINA_CHIRURGIA.jpg}\par
 	\vspace{1cm}
 	{\scshape\large Master's degree programme in Medical Biotechnology \\ and Molecular Medicine\par}
 	\vspace{4cm}
-	{\schape\large\bfseries TITLE HERE\par}
+	{\scshape\large\bfseries TITLE HERE\par}
 	\vspace{4cm}
 	\end{center}
 	
 	\begin{multicols}{2}
 	\begin{center}
 	 	{
-                  \schape\normalsize\textbf{Supervisor:}\\ \\
-                 \schape\normalsize\textbf{Co-Supervisor:}\\ \par}
+                  \scshape\normalsize\textbf{Supervisor:}\\ Supervisor 1 name\\
+                 \scshape\normalsize\textbf{Co-Supervisor:}\\Supervisor 2 name\par}
 	\vfill
-	\schape\normalsize\textbf{Experimental Thesis by:}\\Mattia Toninelli\\ \par 
+	\scshape\normalsize\textbf{Experimental Thesis by:}\\Mattia Toninelli\\ID n. 12345 \par 
 	\end{center}
 	\end{multicols}
 	
@@ -91,7 +111,7 @@ EAMBLE
 
 % Bottom of the page
 	{\begin{center}
-	     \schape\large Academic Year 2020/2021
+	     \scshape\large Academic Year 2020/2021
 	\end{center}}
 
 \end{titlepage}
@@ -112,19 +132,6 @@ Insert abstract portion here
 \
 
 \end{document}
-
-workflow { 
-	idx = channel.of(1,2,3)
-	data = channel.fromPath(params.motifs)
-			.splitCsv(header: true)
-			.map {row -> [row.condition, file(row.path), file(row.consensus)]}
-	sizes = channel.fromPath(params.genome_sizes)
-	bed_of_int = channel.fromPath(params.bed_of_int)
-	
-	SHUFFLE_INTERSECT(idx, sizes, bed_of_int, data)
-
-}
-*/
 
 
 
